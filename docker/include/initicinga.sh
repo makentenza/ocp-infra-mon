@@ -1,0 +1,67 @@
+#!/bin/bash
+
+set -e
+
+function echo_log {
+	DATE='date +%Y/%m/%d:%H:%M:%S'
+	echo `$DATE`" $1"
+}
+
+initfile=/var/lib/mysql/init.done
+
+# update to latest snapshot packages
+#echo_log "Fetching latest icinga* snapshot packages.
+# {
+#  yum update --enablerepo=icinga-snapshot-builds -y icinga2 icinga2-ido-mysql icingaweb2 icingacli
+#  yum clean all
+# } &> /dev/null
+
+echo_log "Validating the icinga2 configuration first."
+if ! icinga2 daemon -C; then
+	echo_log "Icinga 2 config validation failed. Stopping the container."
+	exit 1
+fi
+
+
+if [ ! -f "${initfile}" ]; then
+  /usr/libexec/mariadb-prepare-db-dir
+  /usr/libexec/mysqld --user=root &
+  mysql_pid=$!
+  /usr/libexec/mariadb-wait-ready $mysql_pid
+  mysql < /root/icingadb.sql
+  mysql icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
+  touch ${initfile}
+else
+  /usr/libexec/mysqld --user=root &
+  mysql_pid=$!
+fi
+
+#if [[ -n $ICINGA2_FEATURE_GRAPHITE ]]; then
+#  echo_log "Enabling Icinga 2 Graphite feature."
+#  icinga2 feature enable graphite
+
+#cat <<EOF >/etc/icinga2/features-enabled/graphite.conf
+#/**
+# * The GraphiteWriter type writes check result metrics and
+# * performance data to a graphite tcp socket.
+# */
+#library "perfdata"
+#object GraphiteWriter "graphite" {
+#  host = "$ICINGA2_FEATURE_GRAPHITE_HOST"
+#  port = "$ICINGA2_FEATURE_GRAPHITE_PORT"
+#}
+#EOF
+
+#fi
+
+# Create /var/log/httpd if !exists
+#if [ ! -d /var/log/httpd ];  then
+#	mkdir -p /var/log/httpd
+#fi
+
+#echo_log "Starting Supervisor. CTRL-C will stop the container."
+#/usr/bin/supervisord -c /etc/supervisord.conf >> /dev/null
+
+
+
+icinga2 daemon
