@@ -15,7 +15,9 @@ RUN chmod +x /root/initicinga.sh && \
     yum install nginx nagios-plugins-all mariadb-server mariadb icinga2 icinga2-doc icinga2-ido-mysql icingaweb2 icingacli php-fpm -y && \
     #php-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql -y && \
     yum clean all && \
-    icinga2 feature enable ido-mysql && \
+    #icinga2 feature enable command && \ ### Need to move this to CMD script, to start icinga, enable modules and then restart it
+    #icinga2 feature enable api && \
+    #icinga2 feature enable ido-mysql && \
     mkdir -p /var/log/supervisor && \
     chmod 4755 /bin/ping /bin/ping6 && \
     chown -R icinga:root /etc/icinga2 && \
@@ -39,10 +41,8 @@ RUN chmod +x /root/initicinga.sh && \
     chown -R nginx:icingaweb2 /etc/icingaweb2/* && \
     cp /root/nginx.conf /etc/nginx/nginx.conf && \
     find /etc/icingaweb2 -type f -name "*.ini" -exec chmod 660 {} \; && \
-    find /etc/icingaweb2 -type d -exec chmod 2770 {} \; && \
-    icinga2 daemon && \
-    icinga2 feature enable command && \
-    icinga2 feature enable api
+    find /etc/icingaweb2 -type d -exec chmod 2770 {} \;
+
 
 
 EXPOSE 80 5665
