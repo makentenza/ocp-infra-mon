@@ -30,10 +30,14 @@ if [ ! -f "${initfile}" ]; then
   /usr/libexec/mariadb-wait-ready $mysql_pid
   mysql < /root/icingadb.sql
   mysql icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
+  sed -i 's|listen = 127.0.0.1:9000|listen = /var/run/php5-fpm.sock|g' /etc/php-fpm.d/www.conf
+  /usr/sbin/php-fpm &
+  /usr/sbin/nginx
   touch ${initfile}
 else
   /usr/libexec/mysqld --user=root &
-  mysql_pid=$!
+  /usr/sbin/php-fpm &
+  /usr/sbin/nginx
 fi
 
 #if [[ -n $ICINGA2_FEATURE_GRAPHITE ]]; then
