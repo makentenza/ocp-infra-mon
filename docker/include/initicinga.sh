@@ -28,10 +28,10 @@ if [ ! -f "${initfile}" ]; then
   /usr/libexec/mysqld --user=root &
   mysql_pid=$!
   /usr/libexec/mariadb-wait-ready $mysql_pid
-  mysql < /root/icingadbs.sql
+  mysql < /root/db/icingadbs.sql
   mysql icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
 	mysql icingaweb2 < /usr/share/doc/icingaweb2/schema/mysql.schema.sql
-	mysql icingaweb2 < /root/userhash.sql
+	mysql icingaweb2 < /root/db/userhash.sql
   sed -i 's|listen = 127.0.0.1:9000|listen = /var/run/php5-fpm.sock|g' /etc/php-fpm.d/www.conf
   /usr/sbin/php-fpm &
   /usr/sbin/nginx
