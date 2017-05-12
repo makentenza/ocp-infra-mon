@@ -37,6 +37,7 @@ RUN chmod +x /root/initicinga.sh && \
     chown root:icingaweb2 /etc/icingaweb2 && \
     chmod 2770 /etc/icingaweb2 && \
     mkdir -p /etc/icingaweb2/enabledModules && \
+    ln -s /usr/share/icingaweb2/modules/monitoring /etc/icingaweb2/enabledModules/monitoring && \
     #chown -R apache:icingaweb2 /etc/icingaweb2/* && \
     chown -R nginx:icingaweb2 /etc/icingaweb2/* && \
     cp /root/nginx.conf /etc/nginx/nginx.conf && \
@@ -49,6 +50,7 @@ RUN chmod +x /root/initicinga.sh && \
     cp /root/etcd/modmon/backends.ini /etc/icingaweb2/modules/monitoring/backends.ini && \
     cp /root/etcd/modmon/commandtransports.ini /etc/icingaweb2/modules/monitoring/commandtransports.ini && \
     cp /root/icingaconf/* /etc/icinga2/conf.d/ && \
+    ln -s /etc/icinga2/features-available/command.conf /etc/icinga2/features-enabled/command.conf && \
     find /etc/icingaweb2 -type f -name "*.ini" -exec chmod 660 {} \; && \
     find /etc/icingaweb2 -type d -exec chmod 2770 {} \;
 
