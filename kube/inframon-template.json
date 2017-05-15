@@ -158,8 +158,8 @@
                                 }
                             }
                         ],
-                        "serviceAccount": "grafana",
-                        "serviceAccountName": "grafana"
+                        "serviceAccount": "inframon",
+                        "serviceAccountName": "inframon",
                         "dnsPolicy": "ClusterFirst",
                         "restartPolicy": "Always",
                         "terminationGracePeriodSeconds": 30
