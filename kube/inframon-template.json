@@ -158,6 +158,8 @@
                                 }
                             }
                         ],
+                        "serviceAccount": "grafana",
+                        "serviceAccountName": "grafana"
                         "dnsPolicy": "ClusterFirst",
                         "restartPolicy": "Always",
                         "terminationGracePeriodSeconds": 30
