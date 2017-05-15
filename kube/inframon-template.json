@@ -7,6 +7,20 @@
     "objects": [
         {
             "apiVersion": "v1",
+            "kind": "ServiceAccount",
+            "metadata": {
+                "name": "inframon"
+            }
+        },
+        {
+           "apiVersion": "v1",
+           "kind": "ImageStream",
+           "metadata": {
+               "name": "inframon-host"
+           }
+        },
+        {
+            "apiVersion": "v1",
             "kind": "Service",
             "metadata": {
                 "labels": {
@@ -30,7 +44,7 @@
                     }
                 ],
                 "selector": {
-                    "app": "inframon-host",
+                    "app": "inframon-host"
                 },
                 "sessionAffinity": "None",
                 "type": "NodePort"
@@ -40,12 +54,7 @@
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "inframon-host",
-                "namespace": "test",
-                "selfLink": "/oapi/v1/namespaces/test/buildconfigs/redis-cluster",
-                "uid": "70fd2d97-36ff-11e7-9068-fa163ef9b119",
-                "resourceVersion": "3712332",
-                "creationTimestamp": "2017-05-12T10:40:39Z"
+                "name": "inframon-host"
             },
             "spec": {
                 "triggers": [
@@ -55,9 +64,10 @@
                 ],
                 "runPolicy": "Serial",
                 "source": {
+                    "contextDir": "docker/",
                     "type": "Git",
                     "git": {
-                        "uri": "https://github.com/makentenza/ocp-redis-cluster.git"
+                        "uri": "https://github.com/makentenza/ocp-infra-mon.git"
                     }
                 },
                 "strategy": {
@@ -72,7 +82,7 @@
                 "output": {
                     "to": {
                         "kind": "ImageStreamTag",
-                        "name": "redis-cluster-node:latest"
+                        "name": "inframon-host:latest"
                     }
                 },
                 "resources": {},
