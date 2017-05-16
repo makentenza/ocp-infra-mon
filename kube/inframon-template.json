@@ -123,7 +123,7 @@
                     "spec": {
                         "containers": [
                             {
-                                "image": "inframon/inframon-host",
+                                "image": "inframon-host",
                                 "imagePullPolicy": "IfNotPresent",
                                 "livenessProbe": {
                                     "failureThreshold": 3,
