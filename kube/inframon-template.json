@@ -13,48 +13,60 @@
             }
         },
         {
-           "apiVersion": "v1",
-           "kind": "ImageStream",
-           "metadata": {
-               "name": "inframon-host"
-           }
+            "apiVersion": "v1",
+            "kind": "ImageStream",
+            "metadata": {
+                "annotations": {
+                    "description": "Keeps track of changes in the application image"
+                },
+                "name": "${NAME}"
+            }
         },
         {
             "apiVersion": "v1",
             "kind": "Service",
             "metadata": {
-                "labels": {
-                    "app": "inframon-host"
+                "annotations": {
+                    "description": "Exposes and load balances the application pods"
                 },
-                "name": "inframon-host"
+                "name": "${NAME}"
             },
             "spec": {
                 "ports": [
                     {
-                        "name": "nrpe",
-                        "port": 5665,
-                        "protocol": "TCP",
-                        "targetPort": 5665
-                    },
-                    {
-                        "name": "web",
+                        "name": "icingaweb",
                         "port": 80,
-                        "protocol": "TCP",
                         "targetPort": 80
                     }
                 ],
                 "selector": {
-                    "app": "inframon-host"
-                },
-                "sessionAffinity": "None",
-                "type": "NodePort"
+                    "name": "${NAME}"
+                }
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Route",
+            "metadata": {
+                "name": "${NAME}"
+            },
+            "spec": {
+                "host": "${APPLICATION_DOMAIN}",
+                "path": "/icingaweb2",
+                "to": {
+                    "kind": "Service",
+                    "name": "${NAME}"
+                }
             }
         },
         {
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "inframon-host"
+                "annotations": {
+                    "description": "Defines how to build the application"
+                },
+                "name": "${NAME}"
             },
             "spec": {
                 "triggers": [
@@ -63,6 +75,7 @@
                     }
                 ],
                 "runPolicy": "Serial",
+                "completionDeadlineSeconds": "1800",
                 "source": {
                     "contextDir": "docker/",
                     "type": "Git",
@@ -81,118 +94,96 @@
                 },
                 "output": {
                     "to": {
-                        "kind": "ImageStreamTag",
-                        "name": "inframon-host:latest"
+                      "kind": "ImageStreamTag",
+                      "name": "${NAME}:latest"
                     }
-                },
-                "resources": {},
-                "postCommit": {},
-                "nodeSelector": null
-            },
-            "status": {
-                "lastVersion": 1
+                }
             }
         },
         {
             "apiVersion": "v1",
             "kind": "DeploymentConfig",
             "metadata": {
-                "name": "inframon-host"
+                "annotations": {
+                    "description": "Defines how to deploy the application server"
+                },
+                "name": "${NAME}"
             },
             "spec": {
                 "replicas": 1,
                 "selector": {
-                    "app": "inframon-host"
-                },
-                "strategy": {
-                    "rollingParams": {
-                        "intervalSeconds": 1,
-                        "maxSurge": "25%",
-                        "maxUnavailable": "25%",
-                        "timeoutSeconds": 600,
-                        "updatePeriodSeconds": 1
-                    },
-                    "type": "Rolling"
+                    "name": "${NAME}"
                 },
                 "template": {
                     "metadata": {
                         "labels": {
-                            "app": "inframon-host"
-                        }
+                            "name": "${NAME}"
+                        },
+                        "name": "${NAME}"
                     },
                     "spec": {
                         "containers": [
                             {
-                                "image": "inframon-host",
-                                "imagePullPolicy": "IfNotPresent",
+                                "image": " ",
                                 "livenessProbe": {
-                                    "failureThreshold": 3,
-                                    "initialDelaySeconds": 30,
-                                    "periodSeconds": 10,
-                                    "successThreshold": 1,
                                     "tcpSocket": {
                                         "port": 80
                                     },
-                                    "timeoutSeconds": 5
+                                    "initialDelaySeconds": 30,
+                                    "timeoutSeconds": 3
                                 },
-                                "name": "inframon-host",
+                                "name": "${NAME}",
                                 "ports": [
                                     {
-                                        "containerPort": 80,
-                                        "protocol": "TCP"
-                                    },
-                                    {
-                                        "containerPort": 5665,
-                                        "protocol": "TCP"
+                                        "containerPort": 80
                                     }
                                 ],
                                 "readinessProbe": {
-                                    "failureThreshold": 1,
-                                    "initialDelaySeconds": 30,
-                                    "periodSeconds": 10,
-                                    "successThreshold": 1,
                                     "tcpSocket": {
-                                        "port": 8082
+                                        "port": 80
                                     },
-                                    "timeoutSeconds": 5
+                                    "initialDelaySeconds": 3,
+                                    "timeoutSeconds": 3
                                 }
                             }
                         ],
                         "serviceAccount": "inframon",
-                        "serviceAccountName": "inframon",
-                        "dnsPolicy": "ClusterFirst",
-                        "restartPolicy": "Always",
-                        "terminationGracePeriodSeconds": 30
+                        "serviceAccountName": "inframon"
                     }
                 },
-                "test": false,
                 "triggers": [
+                    {
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "${NAME}"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "${NAME}:latest"
+                            }
+                        },
+                        "type": "ImageChange"
+                    },
                     {
                         "type": "ConfigChange"
                     }
                 ]
             }
+        }
+    ],
+    "parameters": [
+        {
+            "description": "The name assigned to all of the frontend objects defined in this template.",
+            "displayName": "Name",
+            "name": "NAME",
+            "required": true,
+            "value": "inframon-host"
         },
         {
-            "apiVersion": "v1",
-            "kind": "Route",
-            "metadata": {
-                "labels": {
-                    "app": "inframon-host"
-                },
-                "name": "inframon-host"
-            },
-            "spec": {
-                "port": {
-                    "targetPort": "web"
-                },
-                "to": {
-                    "kind": "Service",
-                    "name": "inframon-host",
-                    "weight": 100
-                },
-                "wildcardPolicy": "None"
-            }
+            "description": "The exposed hostname that will route to the CakePHP service, if left blank a value will be defaulted.",
+            "displayName": "Application Hostname",
+            "name": "APPLICATION_DOMAIN"
         }
     ]
 }
