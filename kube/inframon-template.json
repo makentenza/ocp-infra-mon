@@ -143,14 +143,6 @@
                                 },
                                 "volumeMounts": [
                                     {
-                                        "mountPath": "/etc/icinga2",
-                                        "name": "icinga-data"
-                                    },
-                                    {
-                                        "mountPath": "/etc/icingaweb2",
-                                        "name": "icingaweb-data"
-                                    },
-                                    {
                                         "mountPath": "/var/lib.mysql",
                                         "name": "mysql-data"
                                     },
@@ -188,18 +180,6 @@
                         "serviceAccount": "inframon",
                         "serviceAccountName": "inframon",
                         "volumes": [
-                            {
-                                "name": "icinga-data",
-                                "persistentVolumeClaim": {
-                                    "claimName": "${ICINGA_PVC}"
-                                }
-                            },
-                            {
-                                "name": "icingaweb-data",
-                                "persistentVolumeClaim": {
-                                    "claimName": "${ICINGAWEB_PVC}"
-                                }
-                            },
                             {
                                 "name": "mysql-data",
                                 "persistentVolumeClaim": {
@@ -265,20 +245,6 @@
             "name": "NAME",
             "required": true,
             "value": "inframon-host"
-        },
-        {
-            "description": "Persistent Volume Claim to be used for Icinga data persistence.",
-            "displayName": "Icinga Data Claim",
-            "name": "ICINGA_PVC",
-            "required": true,
-            "value": "icinga-data"
-        },
-        {
-            "description": "Persistent Volume Claim to be used for IcingaWeb data persistence.",
-            "displayName": "IcingaWeb Data Claim",
-            "name": "ICINGAWEB_PVC",
-            "required": true,
-            "value": "icingaweb-data"
         },
         {
             "description": "Persistent Volume Claim to be used for MySQL data persistence.",
