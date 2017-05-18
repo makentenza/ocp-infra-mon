@@ -154,8 +154,31 @@
                                         "mountPath": "/var/lib.mysql",
                                         "name": "mysql-data"
                                     },
-
-
+                                    {
+                                        "mountPath": "/run",
+                                        "name": "node-run",
+                                        "readOnly": true
+                                    },
+                                    {
+                                        "mountPath": "/run/lvm",
+                                        "name": "node-lvm",
+                                        "readOnly": true
+                                    },
+                                    {
+                                        "mountPath": "/dev",
+                                        "name": "node-dev",
+                                        "readOnly": true
+                                    },
+                                    {
+                                        "mountPath": "/sys/fs/cgroup",
+                                        "name": "node-cgroup",
+                                        "readOnly": true
+                                    },
+                                    {
+                                        "mountPath": "/noderoot",
+                                        "name": "node-root",
+                                        "readOnly": true
+                                    }
                                 ],
                                 "readinessProbe": {
                                     "tcpSocket": {
@@ -186,8 +209,36 @@
                                 "persistentVolumeClaim": {
                                     "claimName": "${MYSQL-PVC}"
                                 }
+                            },
+                            {
+                                "emptyDir": {},
+                                "name": "node-run"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/run/lvm"
+                                },
+                                "name": "node-lvm"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/dev"
+                                },
+                                "name": "node-dev"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/sys/fs/cgroup"
+                                },
+                                "name": "node-cgroup"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/"
+                                },
+                                "name": "node-root"
                             }
-                        ],
+                        ]
                     }
                 },
                 "triggers": [
