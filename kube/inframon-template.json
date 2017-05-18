@@ -133,6 +133,9 @@
                                     "timeoutSeconds": 3
                                 },
                                 "name": "${NAME}",
+                                "securityContext": {
+                                  "privileged": "true"
+                                },
                                 "ports": [
                                     {
                                         "containerPort": 80
