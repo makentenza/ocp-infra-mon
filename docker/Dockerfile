@@ -55,7 +55,7 @@ RUN chmod +x /root/initicinga.sh && \
     find /etc/icingaweb2 -type f -name "*.ini" -exec chmod 660 {} \; && \
     find /etc/icingaweb2 -type d -exec chmod 2770 {} \;
 
-VOLUME /etc/icinga2 /etc/icingaweb2 /var/lib/mysql
+VOLUME /var/lib/mysql
 
 EXPOSE 80 5665
 

@@ -156,23 +156,19 @@
                                     },
                                     {
                                         "mountPath": "/run",
-                                        "name": "node-run",
-                                        "readOnly": true
+                                        "name": "node-run"
                                     },
                                     {
                                         "mountPath": "/run/lvm",
-                                        "name": "node-lvm",
-                                        "readOnly": true
+                                        "name": "node-lvm"
                                     },
                                     {
                                         "mountPath": "/dev",
-                                        "name": "node-dev",
-                                        "readOnly": true
+                                        "name": "node-dev"
                                     },
                                     {
                                         "mountPath": "/sys/fs/cgroup",
-                                        "name": "node-cgroup",
-                                        "readOnly": true
+                                        "name": "node-cgroup"
                                     },
                                     {
                                         "mountPath": "/noderoot",
