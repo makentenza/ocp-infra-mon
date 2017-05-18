@@ -133,13 +133,29 @@
                                     "timeoutSeconds": 3
                                 },
                                 "name": "${NAME}",
-                                "securityContext": {
-                                  "privileged": "true"
-                                },
                                 "ports": [
                                     {
                                         "containerPort": 80
                                     }
+                                ],
+                                "securityContext": {
+                                  "privileged": true
+                                },
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/etc/icinga2",
+                                        "name": "icinga-data"
+                                    },
+                                    {
+                                        "mountPath": "/etc/icingaweb2",
+                                        "name": "icingaweb-data"
+                                    },
+                                    {
+                                        "mountPath": "/var/lib.mysql",
+                                        "name": "mysql-data"
+                                    },
+
+
                                 ],
                                 "readinessProbe": {
                                     "tcpSocket": {
@@ -151,7 +167,27 @@
                             }
                         ],
                         "serviceAccount": "inframon",
-                        "serviceAccountName": "inframon"
+                        "serviceAccountName": "inframon",
+                        "volumes": [
+                            {
+                                "name": "icinga-data",
+                                "persistentVolumeClaim": {
+                                    "claimName": "${ICINGA-PVC}"
+                                }
+                            },
+                            {
+                                "name": "icingaweb-data",
+                                "persistentVolumeClaim": {
+                                    "claimName": "${ICINGAWEB-PVC}"
+                                }
+                            },
+                            {
+                                "name": "mysql-data",
+                                "persistentVolumeClaim": {
+                                    "claimName": "${MYSQL-PVC}"
+                                }
+                            }
+                        ],
                     }
                 },
                 "triggers": [
@@ -182,6 +218,24 @@
             "name": "NAME",
             "required": true,
             "value": "inframon-host"
+        },
+        {
+            "description": "Persistent Volume Claim to be used for Icinga data persistence.",
+            "displayName": "Icinga Data Claim",
+            "name": "ICINGA-PVC",
+            "required": true
+        },
+        {
+            "description": "Persistent Volume Claim to be used for IcingaWeb data persistence.",
+            "displayName": "IcingaWeb Data Claim",
+            "name": "ICINGAWEB-PVC",
+            "required": true
+        },
+        {
+            "description": "Persistent Volume Claim to be used for MySQL data persistence.",
+            "displayName": "MySQL Data Claim",
+            "name": "MYSQL-PVC",
+            "required": true
         },
         {
             "description": "The exposed hostname that will route to the CakePHP service, if left blank a value will be defaulted.",
