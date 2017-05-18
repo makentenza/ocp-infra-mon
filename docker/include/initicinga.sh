@@ -34,12 +34,14 @@ if [ ! -f "${initfile}" ]; then
 	mysql icingaweb2 < /root/db/userhash.sql
   sed -i 's|listen = 127.0.0.1:9000|listen = /var/run/php5-fpm.sock|g' /etc/php-fpm.d/www.conf
 	mkdir -p /run/icinga2/cmd
+	mkdir -p /var/run/php-fpm
 	chown icinga:icingacmd /run/icinga2
   /usr/sbin/php-fpm &
   /usr/sbin/nginx
   touch ${initfile}
 else
 	mkdir -p /run/icinga2/cmd
+	mkdir -p /var/run/php-fpm
 	chown icinga:icingacmd /run/icinga2
   /usr/libexec/mysqld --user=root &
   /usr/sbin/php-fpm &
