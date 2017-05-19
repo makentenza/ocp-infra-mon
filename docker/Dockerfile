@@ -13,7 +13,7 @@ RUN chmod +x /root/initicinga.sh && \
     yum update -y && \
     yum install epel-release -y && \
     yum install --setopt tsflags= nginx nagios-plugins-all mariadb-server mariadb icinga2 icinga2-doc icinga2-ido-mysql icingaweb2 icingacli php-fpm \
-    php-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql -y && \
+    php-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql lvm2 -y && \
     yum clean all && \
     #icinga2 feature enable command && \ ### Need to move this to CMD script, to start icinga, enable modules and then restart it
     #icinga2 feature enable api && \
@@ -24,14 +24,8 @@ RUN chmod +x /root/initicinga.sh && \
     chown -R icinga:root /etc/icinga2 && \
     mkdir -p /etc/icinga2/pki && \
     chown -R icinga:icinga /etc/icinga2/pki && \
-    mkdir -p /var/run/icinga2 && \
     mkdir -p /var/log/icinga2 && \
-    chown icinga:icingacmd /var/run/icinga2 && \
     chown icinga:icingacmd /var/log/icinga2 && \
-    mkdir -p /var/run/icinga2/cmd && \
-    mkfifo /var/run/icinga2/cmd/icinga2.cmd && \
-    chown -R icinga:icingacmd /var/run/icinga2/cmd && \
-    chmod 2750 /var/run/icinga2/cmd && \
     chown -R icinga:icinga /var/lib/icinga2 && \
     #usermod -a -G icingacmd apache >> /dev/null && \
     usermod -a -G icingacmd nginx >> /dev/null && \

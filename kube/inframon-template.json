@@ -164,8 +164,7 @@
                                     },
                                     {
                                         "mountPath": "/noderoot",
-                                        "name": "node-root",
-                                        "readOnly": true
+                                        "name": "node-root"
                                     }
                                 ],
                                 "readinessProbe": {
