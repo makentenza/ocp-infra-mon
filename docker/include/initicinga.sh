@@ -56,6 +56,14 @@ else
   /usr/sbin/nginx
 fi
 
+if [ "$(ls -A /icingaconf)" ]; then
+     echo "Not copying initial config files as /icingaconf is not Empty"
+else
+    echo "Copying initial config files as /icingaconf is Empty"
+		cp /root/icingaconf/* /icingaconf/
+		chown -R icinga:icinga /icingaconf/*
+fi
+
 #if [[ -n $ICINGA2_FEATURE_GRAPHITE ]]; then
 #  echo_log "Enabling Icinga 2 Graphite feature."
 #  icinga2 feature enable graphite

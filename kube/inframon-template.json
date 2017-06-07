@@ -163,6 +163,10 @@
                                         "name": "node-cgroup"
                                     },
                                     {
+                                        "mountPath": "/icingaconf",
+                                        "name": "icinga-config"
+                                    },
+                                    {
                                         "mountPath": "/node/root",
                                         "name": "node-root"
                                     }
@@ -188,6 +192,10 @@
                             {
                                 "emptyDir": {},
                                 "name": "node-run"
+                            },
+                            {
+                                "emptyDir": {},
+                                "name": "icinga-config"
                             },
                             {
                                 "hostPath": {
