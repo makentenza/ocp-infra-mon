@@ -18,7 +18,7 @@ RUN chmod +x /root/initicinga.sh && \
     #icinga2 feature enable command && \ ### Need to move this to CMD script, to start icinga, enable modules and then restart it
     #icinga2 feature enable api && \
     #icinga2 feature enable ido-mysql && \
-    mkdir /noderoot && \
+    mkdir -p /node/root && \
     mkdir -p /var/log/supervisor && \
     chmod 4755 /bin/ping /bin/ping6 && \
     chown -R icinga:root /etc/icinga2 && \

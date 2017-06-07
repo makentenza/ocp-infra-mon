@@ -163,7 +163,7 @@
                                         "name": "node-cgroup"
                                     },
                                     {
-                                        "mountPath": "/noderoot",
+                                        "mountPath": "/node/root",
                                         "name": "node-root"
                                     }
                                 ],
