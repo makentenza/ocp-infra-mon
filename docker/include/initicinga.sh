@@ -57,11 +57,11 @@ else
 fi
 
 if [ "$(ls -A /icingaconf)" ]; then
-     echo "Not copying initial config files as /icingaconf is not Empty"
+     echo "Not copying initial config files as /etc/icinga2/conf.d is not Empty"
 else
-    echo "Copying initial config files as /icingaconf is Empty"
-		cp /root/icingaconf/* /icingaconf/
-		chown -R icinga:icinga /icingaconf/*
+    echo "Copying initial config files as /etc/icinga2/conf.d is Empty"
+		cp /root/icingaconf/* /etc/icinga2/conf.d/
+		chown -R icinga:icinga /etc/icinga2/conf.d
 fi
 
 #if [[ -n $ICINGA2_FEATURE_GRAPHITE ]]; then

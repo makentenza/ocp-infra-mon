@@ -19,8 +19,8 @@ RUN chmod +x /root/initicinga.sh && \
     #icinga2 feature enable api && \
     #icinga2 feature enable ido-mysql && \
     mkdir -p /node/root && \
-    mkdir /icingaconf && \
-    chown icinga:icinga /icingaconf && \
+    #mkdir /icingaconf && \
+    #chown icinga:icinga /icingaconf && \
     mkdir -p /var/log/supervisor && \
     chmod 4755 /bin/ping /bin/ping6 && \
     chown -R icinga:root /etc/icinga2 && \
@@ -51,7 +51,7 @@ RUN chmod +x /root/initicinga.sh && \
     find /etc/icingaweb2 -type f -name "*.ini" -exec chmod 660 {} \; && \
     find /etc/icingaweb2 -type d -exec chmod 2770 {} \;
 
-VOLUME /var/lib/mysql /icingaconf
+VOLUME /var/lib/mysql /etc/icinga2/conf.d
 
 EXPOSE 80 5665
 

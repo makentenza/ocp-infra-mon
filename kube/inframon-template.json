@@ -194,8 +194,10 @@
                                 "name": "node-run"
                             },
                             {
-                                "emptyDir": {},
-                                "name": "icinga-config"
+                                "name": "icinga-config",
+                                "persistentVolumeClaim": {
+                                    "claimName": "${ICINCFG_PVC}"
+                                }
                             },
                             {
                                 "hostPath": {
@@ -261,7 +263,14 @@
             "value": "mysql-data"
         },
         {
-            "description": "The exposed hostname that will route to the CakePHP service, if left blank a value will be defaulted.",
+            "description": "Persistent Volume Claim to be used for Icinga2 config persistence.",
+            "displayName": "Icinga Config Claim",
+            "name": "ICINCFG_PVC",
+            "required": true,
+            "value": "icinga-config"
+        },
+        {
+            "description": "The exposed hostname that will route to the inframon-host service, if left blank a value will be defaulted.",
             "displayName": "Application Hostname",
             "name": "APPLICATION_DOMAIN"
         }
