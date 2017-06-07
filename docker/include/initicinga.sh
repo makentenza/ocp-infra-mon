@@ -57,13 +57,20 @@ else
 fi
 
 if [ "$(ls -A /etc/icinga2/conf.d)" ]; then
-     echo "Not copying initial config files as /etc/icinga2/conf.d is not Empty"
+    echo_log "Not copying initial config files as /etc/icinga2/conf.d is not Empty"
 else
-    echo "Copying initial config files as /etc/icinga2/conf.d is Empty"
+    echo_log "Copying initial config files as /etc/icinga2/conf.d is Empty"
 		cp /root/icingaconf/* /etc/icinga2/conf.d/
 		chown -R icinga:icinga /etc/icinga2/conf.d
 fi
 
+# Configure Host constant with Node Hostname
+HOST_FILE=/node/root/etc/hostname
+
+if [ -f "${HOST_FILE}" ]; then
+	MON_HOST=$(cat /node/root/etc/hostname)
+	echo "const NodeName = ${MON_HOST}" >>  /etc/icinga2/constants.conf
+fi
 #if [[ -n $ICINGA2_FEATURE_GRAPHITE ]]; then
 #  echo_log "Enabling Icinga 2 Graphite feature."
 #  icinga2 feature enable graphite
