@@ -56,7 +56,7 @@ else
   /usr/sbin/nginx
 fi
 
-if [ "$(ls -A /icingaconf)" ]; then
+if [ "$(ls -A /etc/icinga2/conf.d)" ]; then
      echo "Not copying initial config files as /etc/icinga2/conf.d is not Empty"
 else
     echo "Copying initial config files as /etc/icinga2/conf.d is Empty"

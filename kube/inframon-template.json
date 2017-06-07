@@ -163,7 +163,7 @@
                                         "name": "node-cgroup"
                                     },
                                     {
-                                        "mountPath": "/icingaconf",
+                                        "mountPath": "/etc/icinga2/conf.d",
                                         "name": "icinga-config"
                                     },
                                     {
