@@ -68,7 +68,7 @@ fi
 HOST_FILE=/node/root/etc/hostname
 
 if [ -f "${HOST_FILE}" ]; then
-	MON_HOST=$(cat /node/root/etc/hostname)
+	MON_HOST='"'$(cat /node/root/etc/hostname)'"'
 	echo "const NodeName = ${MON_HOST}" >>  /etc/icinga2/constants.conf
 fi
 #if [[ -n $ICINGA2_FEATURE_GRAPHITE ]]; then
