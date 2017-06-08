@@ -119,10 +119,6 @@
                                         "name": "node-root"
                                     }
                                 ],
-                                "hostNetwork": true,
-                                "nodeSelector": {
-                                    "inframon-agent": "true"
-                                },
                                 "readinessProbe": {
                                     "tcpSocket": {
                                         "port": 5665
@@ -132,6 +128,10 @@
                                 }
                             }
                         ],
+                        "hostNetwork": true,
+                        "nodeSelector": {
+                            "inframon-agent": "true"
+                        },
                         "serviceAccount": "inframon",
                         "serviceAccountName": "inframon",
                         "volumes": [
