@@ -14,7 +14,9 @@ RUN chmod +x /root/initicinga.sh && \
     yum install nagios-plugins-all nrpe lvm2 -y && \
     yum clean all && \
     mkdir -p /node/root && \
+    mkdir -p /etc/nrpe && \
     chmod 4755 /bin/ping /bin/ping6 && \
+    cp /root/nrpe_conf/nrpe.cfg /etc/nrpe/
 
 VOLUME /etc/nrpe.d
 
