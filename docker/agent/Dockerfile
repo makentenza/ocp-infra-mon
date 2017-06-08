@@ -8,7 +8,7 @@ LABEL io.k8s.description="OCP Infra Monitoring Agent" \
 
 ADD include /root/
 
-RUN chmod +x /root/initicinga.sh && \
+RUN chmod +x /root/inframon-agent.sh && \
     yum update -y && \
     yum install epel-release -y && \
     yum install nagios-plugins-all nrpe lvm2 -y && \
