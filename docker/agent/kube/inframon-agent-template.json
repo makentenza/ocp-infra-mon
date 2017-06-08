@@ -2,16 +2,9 @@
     "kind": "Template",
     "apiVersion": "v1",
     "metadata": {
-        "name": "inframon"
+        "name": "inframon-agent"
     },
     "objects": [
-        {
-            "apiVersion": "v1",
-            "kind": "ServiceAccount",
-            "metadata": {
-                "name": "inframon"
-            }
-        },
         {
             "apiVersion": "v1",
             "kind": "ImageStream",
@@ -20,43 +13,6 @@
                     "description": "Keeps track of changes in the application image"
                 },
                 "name": "${NAME}"
-            }
-        },
-        {
-            "apiVersion": "v1",
-            "kind": "Service",
-            "metadata": {
-                "annotations": {
-                    "description": "Exposes and load balances the application pods"
-                },
-                "name": "${NAME}"
-            },
-            "spec": {
-                "ports": [
-                    {
-                        "name": "icingaweb",
-                        "port": 80,
-                        "targetPort": 80
-                    }
-                ],
-                "selector": {
-                    "name": "${NAME}"
-                }
-            }
-        },
-        {
-            "apiVersion": "v1",
-            "kind": "Route",
-            "metadata": {
-                "name": "${NAME}"
-            },
-            "spec": {
-                "host": "${APPLICATION_DOMAIN}",
-                "path": "/icingaweb2",
-                "to": {
-                    "kind": "Service",
-                    "name": "${NAME}"
-                }
             }
         },
         {
@@ -77,7 +33,7 @@
                 "runPolicy": "Serial",
                 "completionDeadlineSeconds": "1800",
                 "source": {
-                    "contextDir": "docker/",
+                    "contextDir": "docker/agent/",
                     "type": "Git",
                     "git": {
                         "uri": "https://github.com/makentenza/ocp-infra-mon.git"
@@ -101,18 +57,19 @@
             }
         },
         {
-            "apiVersion": "v1",
-            "kind": "DeploymentConfig",
+            "apiVersion": "extensions/v1beta1",
+            "kind": "DaemonSet",
             "metadata": {
                 "annotations": {
-                    "description": "Defines how to deploy the application server"
+                    "description": "Defines how to deploy the application"
                 },
                 "name": "${NAME}"
             },
             "spec": {
-                "replicas": 1,
                 "selector": {
-                    "name": "${NAME}"
+                    "matchLabels": {
+                        "inframon-agent": "true"
+                    }
                 },
                 "template": {
                     "metadata": {
@@ -127,25 +84,16 @@
                                 "image": " ",
                                 "livenessProbe": {
                                     "tcpSocket": {
-                                        "port": 80
+                                        "port": 5665
                                     },
                                     "initialDelaySeconds": 30,
                                     "timeoutSeconds": 3
                                 },
                                 "name": "${NAME}",
-                                "ports": [
-                                    {
-                                        "containerPort": 80
-                                    }
-                                ],
                                 "securityContext": {
                                   "privileged": true
                                 },
                                 "volumeMounts": [
-                                    {
-                                        "mountPath": "/var/lib.mysql",
-                                        "name": "mysql-data"
-                                    },
                                     {
                                         "mountPath": "/run",
                                         "name": "node-run"
@@ -163,17 +111,21 @@
                                         "name": "node-cgroup"
                                     },
                                     {
-                                        "mountPath": "/etc/icinga2/conf.d",
-                                        "name": "icinga-config"
+                                        "mountPath": "/etc/nrpe.d",
+                                        "name": "nrpe-config"
                                     },
                                     {
                                         "mountPath": "/node/root",
                                         "name": "node-root"
                                     }
                                 ],
+                                "hostNetwork": true,
+                                "nodeSelector": {
+                                    "inframon-agent": "true"
+                                },
                                 "readinessProbe": {
                                     "tcpSocket": {
-                                        "port": 80
+                                        "port": 5665
                                     },
                                     "initialDelaySeconds": 3,
                                     "timeoutSeconds": 3
@@ -184,20 +136,14 @@
                         "serviceAccountName": "inframon",
                         "volumes": [
                             {
-                                "name": "mysql-data",
-                                "persistentVolumeClaim": {
-                                    "claimName": "${MYSQL_PVC}"
-                                }
-                            },
-                            {
                                 "emptyDir": {},
                                 "name": "node-run"
                             },
                             {
-                                "name": "icinga-config",
-                                "persistentVolumeClaim": {
-                                    "claimName": "${ICINCFG_PVC}"
-                                }
+                                "name": "nrpe-config",
+                                "hostPath": {
+                                    "path": "/inframon-agent"
+                                },
                             },
                             {
                                 "hostPath": {
@@ -253,21 +199,7 @@
             "displayName": "Name",
             "name": "NAME",
             "required": true,
-            "value": "inframon-host"
-        },
-        {
-            "description": "Persistent Volume Claim to be used for MySQL data persistence.",
-            "displayName": "MySQL Data Claim",
-            "name": "MYSQL_PVC",
-            "required": true,
-            "value": "mysql-data"
-        },
-        {
-            "description": "Persistent Volume Claim to be used for Icinga2 config persistence.",
-            "displayName": "Icinga Config Claim",
-            "name": "ICINCFG_PVC",
-            "required": true,
-            "value": "icinga-config"
+            "value": "inframon-agent"
         },
         {
             "description": "The exposed hostname that will route to the inframon-host service, if left blank a value will be defaulted.",
