@@ -7,12 +7,11 @@ function echo_log {
 	echo `$DATE`" $1"
 }
 
-if [ "$(ls -A /etc/icinga2/conf.d)" ]; then
-    echo_log "Not copying initial config files as /etc/icinga2/conf.d is not Empty"
+if [ "$(ls -A /etc/nrpe.d)" ]; then
+    echo_log "Not copying initial config files as /etc/nrpe.d is not Empty"
 else
-    echo_log "Copying initial config files as /etc/icinga2/conf.d is Empty"
-		cp /root/icingaconf/* /etc/icinga2/conf.d/
-		chown -R icinga:icinga /etc/icinga2/conf.d
+    echo_log "Copying initial config files as /etc/nrpe.d is Empty"
+		cp /root/nrpe_probes/* /etc/nrpe.d/
 fi
 
 if [ -f "/usr/sbin/nrpe" ]; then
