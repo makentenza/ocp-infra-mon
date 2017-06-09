@@ -81,7 +81,7 @@
                     "spec": {
                         "containers": [
                             {
-                                "image": " ",
+                                "image": "docker-registry.default.svc.cluster.local:5000/inframon/inframon-agent:latest",
                                 "livenessProbe": {
                                     "tcpSocket": {
                                         "port": 5665
@@ -171,25 +171,7 @@
                             }
                         ]
                     }
-                },
-                "triggers": [
-                    {
-                        "imageChangeParams": {
-                            "automatic": true,
-                            "containerNames": [
-                                "${NAME}"
-                            ],
-                            "from": {
-                                "kind": "ImageStreamTag",
-                                "name": "${NAME}:latest"
-                            }
-                        },
-                        "type": "ImageChange"
-                    },
-                    {
-                        "type": "ConfigChange"
-                    }
-                ]
+                }
             }
         }
     ],
