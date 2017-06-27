@@ -20,6 +20,6 @@ RUN chmod +x /root/inframon-agent.sh && \
 
 VOLUME /etc/nrpe.d
 
-EXPOSE 5665
+EXPOSE 5666
 
 CMD ["/bin/bash", "-c", "/root/inframon-agent.sh"]
