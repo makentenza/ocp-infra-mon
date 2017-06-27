@@ -23,9 +23,13 @@ Image content
 
 Persistent Storage
 
-  /etc/nrpe.d - NRPE configuration files with all the required commands configured - hostPath volume
+  /etc/nrpe.d - NRPE configuration files with all the required commands configured - hostPath volume "/inframon-agent"
 
 Build + deploy
 
   Build from GitHub as a Docker source
   Deployed as a DaemonSet with 'inframon-agent=true' Node selector
+
+Requirements
+
+  The Node where this container run must allow connections to 5665/TCP port
