@@ -42,6 +42,7 @@ RUN chmod +x /root/initicinga.sh && \
     cp /root/etcd/config.ini /etc/icingaweb2/config.ini && \
     cp /root/etcd/authentication.ini etc/icingaweb2/authentication.ini && \
     cp /root/etcd/roles.ini /etc/icingaweb2/roles.ini && \
+    cp /root/php.ini /etc/php.ini && \
     mkdir /etc/icingaweb2/modules/monitoring && \
     cp /root/icinga2.conf /etc/icinga2/icinga2.conf && \
     cp /root/etcd/modmon/config.ini /etc/icingaweb2/modules/monitoring/config.ini && \
