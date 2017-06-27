@@ -32,4 +32,4 @@ Build + deploy
 
 Requirements
 
-  The Node where this container run must allow connections to 5665/TCP port
+  The Node where this container run must allow connections to 5666/TCP port

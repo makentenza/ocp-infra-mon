@@ -3,7 +3,7 @@ MAINTAINER Marcos Entenza <mak@redhat.com>
 
 LABEL io.k8s.description="OCP Infra Monitoring Agent" \
       io.k8s.display-name="OCP Infra Monitoring Agent" \
-      io.openshift.expose-services="5665:tcp" \
+      io.openshift.expose-services="5666:tcp" \
       io.openshift.tags="inframon agent"
 
 ADD include /root/
