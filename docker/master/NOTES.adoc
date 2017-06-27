@@ -1,0 +1,31 @@
+= Inframon Master Notes
+
+Image content
+
+  icinga2 + icingaweb2 + MySQL
+
+Credentials
+
+  User: icingaadmin
+  Password: icinga
+
+Persistent Storage
+
+  /var/lib/mysql - MySQL Data. Using persistentVolumeClaim
+  /etc/icinga2/conf.d - Icinga2 configuration files. Info regarding hosts and services is stored there. Using persistentVolumeClaim
+
+
+= Inframon Agent Notes
+
+Image content
+
+  nrpe daemon with nagios plugins
+
+Persistent Storage
+
+  /etc/nrpe.d - NRPE configuration files with all the required commands configured - hostPath volume
+
+Build + deploy
+
+  Build from GitHub as a Docker source
+  Deployed as a DaemonSet with 'inframon-agent=true' Node selector
