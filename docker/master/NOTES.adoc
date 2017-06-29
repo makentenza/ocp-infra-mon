@@ -33,3 +33,11 @@ Build + deploy
 Requirements
 
   The Node where this container run must allow connections to 5666/TCP port
+
+= Describing the full deployment using Ansible
+
+Using the existing OCP inventory file, there will be the following tasks doing:
+
+  - Ensure /inframon-agent directoy exists on every Node
+  - Ensure iptables is allowing connections to 5666/tcp
+  -

@@ -84,7 +84,7 @@
                                 "image": "docker-registry.default.svc.cluster.local:5000/inframon/inframon-agent:latest",
                                 "livenessProbe": {
                                     "tcpSocket": {
-                                        "port": 5665
+                                        "port": 5666
                                     },
                                     "initialDelaySeconds": 30,
                                     "timeoutSeconds": 3
@@ -97,6 +97,18 @@
                                     {
                                         "mountPath": "/run",
                                         "name": "node-run"
+                                    },
+                                    {
+                                        "mountPath": "/var/run/dbus",
+                                        "name": "run-dbus"
+                                    },
+                                    {
+                                        "mountPath": "/run/systemd",
+                                        "name": "run-systemd"
+                                    },
+                                    {
+                                        "mountPath": "/etc/systemd/system",
+                                        "name": "etc-systemd"
                                     },
                                     {
                                         "mountPath": "/run/lvm",
@@ -121,7 +133,7 @@
                                 ],
                                 "readinessProbe": {
                                     "tcpSocket": {
-                                        "port": 5665
+                                        "port": 5666
                                     },
                                     "initialDelaySeconds": 3,
                                     "timeoutSeconds": 3
@@ -150,6 +162,24 @@
                                     "path": "/run/lvm"
                                 },
                                 "name": "node-lvm"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/var/run/dbus"
+                                },
+                                "name": "run-dbus"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/run/systemd"
+                                },
+                                "name": "run-systemd"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/etc/systemd/system"
+                                },
+                                "name": "etc-systemd"
                             },
                             {
                                 "hostPath": {
