@@ -81,7 +81,7 @@
                     "spec": {
                         "containers": [
                             {
-                                "image": "docker-registry.default.svc.cluster.local:5000/inframon/inframon-agent:latest",
+                                "image": "172.30.18.81:5000/inframon/inframon-agent:latest",
                                 "livenessProbe": {
                                     "tcpSocket": {
                                         "port": 5666
@@ -129,6 +129,10 @@
                                     {
                                         "mountPath": "/node/root",
                                         "name": "node-root"
+                                    },
+                                    {
+                                        "mountPath": "/node/docker",
+                                        "name": "node-docker"
                                     }
                                 ],
                                 "readinessProbe": {
@@ -198,6 +202,12 @@
                                     "path": "/"
                                 },
                                 "name": "node-root"
+                            },
+                            {
+                                "hostPath": {
+                                    "path": "/var/lib/docker"
+                                },
+                                "name": "node-docker"
                             }
                         ]
                     }
