@@ -7,7 +7,7 @@ function echo_log {
 	echo `$DATE`" $1"
 }
 
-if [ "$(ls -A /etc/nrpe.d | grep -v trashcan)" ]; then
+if [ "$(ls -A /etc/nrpe.d | grep -v trashcan | grep -v scripts)" ]; then
     echo_log "Not copying initial config files as /etc/nrpe.d is not Empty"
 else
     echo_log "Copying initial config files as /etc/nrpe.d is Empty"
