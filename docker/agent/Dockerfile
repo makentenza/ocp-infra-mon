@@ -11,11 +11,12 @@ ADD include /root/
 RUN chmod +x /root/inframon-agent.sh && \
     yum update -y && \
     yum install epel-release -y && \
-    yum install nagios-plugins-all nagios-plugins-nrpe nrpe lvm2 -y && \
+    yum install nagios-plugins-all nagios-plugins-nrpe nrpe lvm2 sysstat -y && \
     yum clean all && \
     mkdir -p /node/root && \
     mkdir -p /node/docker && \
     mkdir -p /etc/nrpe && \
+    mkdir -p /etc/nrpe.d/scripts && \
     chmod 4755 /bin/ping /bin/ping6 && \
     cp /root/nrpe_conf/nrpe.cfg /etc/nrpe/
 

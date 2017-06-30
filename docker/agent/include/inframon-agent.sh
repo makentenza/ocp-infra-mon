@@ -12,6 +12,7 @@ if [ "$(ls -A /etc/nrpe.d | grep -v trashcan)" ]; then
 else
     echo_log "Copying initial config files as /etc/nrpe.d is Empty"
 		cp /root/nrpe_probes/* /etc/nrpe.d/
+		cp /root/nrpe_scripts/* /etc/nrpe.d/scripts/
 fi
 
 if [ -f "/usr/sbin/nrpe" ]; then
