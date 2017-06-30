@@ -1,0 +1,4 @@
+- name: Deploy Infra Monitoring Tool in the existing OCP Cluster
+  hosts: newmaster03.mak.lab
+  roles:
+     - { role: config-reqs }

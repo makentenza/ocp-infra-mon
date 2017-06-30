@@ -1,0 +1,7 @@
+---
+# handlers file for config-reqs
+- name: restart iptables
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: iptables
