@@ -1,0 +1,9 @@
+object Host "{{ ansible_hostname }}" {
+  address = "{{ ansible_hostname }}"
+  check_command = "hostalive"
+  vars.master = "{{ is_master }}"
+  vars.node = "{{ is_node }}"
+  vars.etcd = "{{ is_etcd }}"
+  vars.os = "Linux"
+  vars.ocp = "true"
+}

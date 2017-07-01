@@ -15,6 +15,8 @@ else
 		cp /root/nrpe_scripts/* /etc/nrpe.d/scripts/
 fi
 
+chmod +x /etc/nrpe.d
+
 if [ -f "/usr/sbin/nrpe" ]; then
   NRPE_EXEC="/usr/sbin/nrpe"
 else
