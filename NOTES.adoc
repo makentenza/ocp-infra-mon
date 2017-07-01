@@ -14,6 +14,10 @@ Persistent Storage
   /var/lib/mysql - MySQL Data. Using persistentVolumeClaim
   /etc/icinga2/conf.d - Icinga2 configuration files. Info regarding hosts and services is stored there. Using persistentVolumeClaim
 
+ConfigMap
+
+  /etc/icinga2/conf.d/map
+
 
 = Inframon Agent Notes
 
