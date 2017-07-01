@@ -9,3 +9,11 @@
     backup: yes
   notify:
     - restart iptables
+
+- name: Ensure /inframon-agent directoy exists
+  file:
+    path: /inframon-agent
+    state: directory
+    owner: root
+    group: root
+    mode: 0644
