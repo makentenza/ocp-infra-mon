@@ -3,3 +3,4 @@
   roles:
      - { role: config-reqs }
      - { role: config-agents }
+     - { role: config-master }

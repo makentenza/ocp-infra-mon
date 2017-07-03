@@ -1,2 +1,13 @@
 ---
 # tasks file for config-master
+- name: Ensure temporary directory exists
+  file:
+    path: /tmp/icingatmp
+    state: directory
+  delegate_to: localhost
+
+- name: Create Icinga Host config files for Cluster members
+  template:
+    src: ../templates/host.j2
+    dest: /tmp/icingatmp/{{ ansible_hostname }}.conf
+  delegate_to: localhost

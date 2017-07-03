@@ -1,9 +1,21 @@
-object Host "{{ ansible_hostname }}" {
-  address = "{{ ansible_hostname }}"
+object Host "{{ ansible_fqdn }}" {
+  address = "{{ ansible_fqdn }}"
   check_command = "hostalive"
-  vars.master = "{{ is_master }}"
-  vars.node = "{{ is_node }}"
-  vars.etcd = "{{ is_etcd }}"
+  {% if ansible_fqdn in groups['masters'] %}
+  vars.master = "true"
+  {% else %}
+  vars.master = "false"
+  {% endif %}
+  {% if ansible_fqdn in groups['nodes'] %}
+  vars.node = "true"
+  {% else %}
+  vars.node = "false"
+  {% endif %}
+  {% if ansible_fqdn in groups['etcd'] %}
+  vars.etcd = "true"
+  {% else %}
+  vars.etcd = "false"
+  {% endif %}
   vars.os = "Linux"
   vars.ocp = "true"
 }
