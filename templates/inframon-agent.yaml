@@ -54,10 +54,13 @@ objects:
         containers:
         - image: 172.30.18.81:5000/inframon/inframon-agent:latest
           livenessProbe:
-            initialDelaySeconds: 30
-            tcpSocket:
-              port: 5666
-            timeoutSeconds: 3
+            exec:
+              command:
+              - /usr/lib64/nagios/plugins/check_nrpe
+              - -H
+              - 127.0.0.1
+            initialDelaySeconds: 5
+            periodSeconds: 5
           name: ${NAME}
           readinessProbe:
             initialDelaySeconds: 3

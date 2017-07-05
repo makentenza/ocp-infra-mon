@@ -99,6 +99,8 @@ objects:
             name: mysql-data
           - mountPath: /etc/icinga2/conf.d
             name: icinga-config
+          - mountPath: /etc/icinga2/conf.d/map
+            name: nrpe-hosts
         serviceAccount: inframon
         serviceAccountName: inframon
         volumes:
@@ -108,6 +110,9 @@ objects:
         - name: icinga-config
           persistentVolumeClaim:
             claimName: ${ICINCFG_PVC}
+        - name: nrpe-hosts
+          configMap:
+            defaultMode: 420
     triggers:
     - imageChangeParams:
         automatic: true
