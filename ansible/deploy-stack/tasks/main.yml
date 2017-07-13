@@ -1,0 +1,6 @@
+---
+# tasks file for config-master
+- name: Ensure temporary directory exists
+  shell: >
+    oc new-project "test"
+  when: inventory_hostname == masters[0]
