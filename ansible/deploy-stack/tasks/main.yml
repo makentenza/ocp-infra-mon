@@ -1,6 +1,11 @@
 ---
 # tasks file for config-master
-- name: Ensure temporary directory exists
+- name: Create infra-monitor namespace
   command: >
-  oc new-project infra-monitor --display-name="OCP Infra Monitoring" --description="OpenShift Infrastructure Monitor"
+    oc new-project infra-monitor --display-name="OCP Infra Monitoring" --description="OpenShift Infrastructure Monitor"
   when: inventory_hostname == groups["masters"][0]
+
+- name: Create objects from inframon-host Template
+command: >
+  oc process -f ../../../templates/inframon-host.yaml | oc create -f -
+when: inventory_hostname == groups["masters"][0]
