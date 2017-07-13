@@ -11,7 +11,7 @@ ADD include /root/
 RUN chmod +x /root/inframon-agent.sh && \
     yum update -y && \
     yum install epel-release -y && \
-    yum install nagios-plugins-all nagios-plugins-nrpe nrpe lvm2 sysstat -y && \
+    yum install nagios-plugins-all nagios-plugins-nrpe nrpe lvm2 sysstat python34-pip -y && \
     yum clean all && \
     mkdir -p /node/root && \
     mkdir -p /node/docker && \
