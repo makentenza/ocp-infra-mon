@@ -8,10 +8,10 @@
 - name: Copy templates to first masters
   copy:
     src: "{{ item }}"
-    dest: /tmp/{{ item }}
+    dest: /tmp
   with_items:
-    - "{{ role_path }}"/templates/inframon-host.yaml
-    - "{{ role_path }}"/inframon-agent.yaml
+    - "{{ role_path }}/templates/inframon-host.yaml"
+    - "{{ role_path }}/inframon-agent.yaml"
   when: inventory_hostname == groups["masters"][0]
   delegate_to: localhost
 
