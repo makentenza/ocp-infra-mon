@@ -5,7 +5,17 @@
     oc new-project infra-monitor --display-name="OCP Infra Monitoring" --description="OpenShift Infrastructure Monitor"
   when: inventory_hostname == groups["masters"][0]
 
+- name: Copy templates to first masters
+  copy:
+    src: "{{ item }}"
+    dest: /tmp/{{ item }}
+  with_items:
+    - ../templates/inframon-host.yaml
+    - ../templates/inframon-agent.yaml
+  when: inventory_hostname == groups["masters"][0]
+  delegate_to: localhost
+
 - name: Create objects from inframon-host Template
-command: >
-  oc process -f ../../../templates/inframon-host.yaml | oc create -f -
-when: inventory_hostname == groups["masters"][0]
+  shell: >
+    oc process -f /tmp/inframon-host.yaml | oc create -f -
+  when: inventory_hostname == groups["masters"][0]
