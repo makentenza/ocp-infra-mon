@@ -111,6 +111,7 @@ objects:
             claimName: ${ICINCFG_PVC}
         - name: nrpe-hosts
           configMap:
+            name: nrpe-hosts
             defaultMode: 420
     triggers:
     - imageChangeParams:
