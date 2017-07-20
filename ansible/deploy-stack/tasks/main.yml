@@ -19,3 +19,10 @@
   shell: >
     oc process -f /tmp/inframon-host.yaml | oc create -f -
   when: inventory_hostname == groups["masters"][0]
+
+#- name: Create persistentVolumeClaim
+
+- name: Add inframon ServiceAccount to anyuid SCC
+  command: >
+    oc adm policy add-scc-to-user anyuid system:serviceaccount:infra-monitor:inframon
+  when: inventory_hostname == groups["masters"][0]
