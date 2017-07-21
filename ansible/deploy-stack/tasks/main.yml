@@ -13,7 +13,7 @@
     - "{{ role_path }}/templates/inframon-host.yaml"
     - "{{ role_path }}/templates/inframon-agent.yaml"
   when: inventory_hostname == groups["masters"][0]
-  delegate_to: localhost
+  #delegate_to: localhost
 
 - name: Create objects from inframon-host Template
   shell: >
