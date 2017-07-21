@@ -8,6 +8,6 @@
 
 - name: Create Icinga Host config files for Cluster members
   template:
-    src: ../templates/host.j2
+    src: "{{ role_path }}/templates/host.j2"
     dest: /tmp/icingatmp/{{ ansible_hostname }}.conf
   delegate_to: localhost

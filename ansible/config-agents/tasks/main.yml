@@ -2,7 +2,7 @@
 # tasks file for config-agents
 - name: Ensure NRPE custom commands and scripts are deployed under /inframon-agent HostPath
   copy:
-    src: ../templates/
+    src: "{{ role_path }}/templates/"
     dest: /inframon-agent
     directory_mode: 0644
 
