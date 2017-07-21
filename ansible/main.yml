@@ -1,7 +1,7 @@
 - name: Deploy Infra Monitoring Tool in the existing OCP Cluster
   hosts: OSEv3
   roles:
-     #- { role: config-reqs }
-     #- { role: config-agents }
-     #- { role: config-master }
+     - { role: config-reqs }
+     - { role: config-agents }
+     - { role: config-master }
      - { role: deploy-stack }
