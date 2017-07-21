@@ -1,11 +1,5 @@
 ---
 # tasks file for config-master
-- name: Ensure temporary directory exists locally
-  file:
-    path: /tmp/icingatmp
-    state: directory
-  delegate_to: localhost
-
 - name: Ensure temporary directory exists on first Master
   file:
     path: /tmp/icingatmp
@@ -17,10 +11,3 @@
     src: "{{ role_path }}/templates/host.j2"
     dest: /tmp/icingatmp/{{ ansible_hostname }}.conf
   delegate_to: "{{ first_master }}"
-
-#- name: Copy Icinga Host config files fo first Master
-#  synchronize:
-#    src: /tmp/icingatmp
-#    dest: /tmp/icingatmp
-#  when: inventory_hostname == groups["masters"][0]
-#  delegate_to: localhost
