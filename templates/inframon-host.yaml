@@ -73,15 +73,15 @@ objects:
        requests:
          storage: 5Gi
 - apiVersion: v1
- kind: PersistentVolumeClaim
- metadata:
-   name: ${ICINCFG_PVC}
- spec:
-   accessModes:
-   - ReadWriteMany
-   resources:
-      requests:
-        storage: 1Gi  
+  kind: PersistentVolumeClaim
+  metadata:
+    name: ${ICINCFG_PVC}
+  spec:
+    accessModes:
+    - ReadWriteMany
+    resources:
+       requests:
+         storage: 1Gi  
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
