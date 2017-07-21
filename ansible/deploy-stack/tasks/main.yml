@@ -31,3 +31,13 @@
   command: >
     /usr/local/bin/oc create configmap nrpe-hosts --from-file=/tmp/icingatmp/
   when: inventory_hostname == groups["masters"][0]
+
+- name: Create objects from inframon-agent Template
+  shell: >
+    /usr/local/bin/oc process -f /tmp/inframon-agent.yaml | /usr/local/bin/oc create -f -
+  when: inventory_hostname == groups["masters"][0]
+
+- name: Add inframon ServiceAccount to privileged SCC
+  command: >
+    /usr/local/bin/oc adm policy add-scc-to-user privileged system:serviceaccount:infra-monitor:inframon
+  when: inventory_hostname == groups["masters"][0]

@@ -23,6 +23,11 @@ else
   NRPE_EXEC="/usr/bin/nrpe"
 fi
 
+if [ ! -d "/var/run/nrpe" ]; then
+  echo_log "Creating /var/run/nrpe as it does not exist"
+	mkdir -p /var/run/nrpe
+fi
+
 $NRPE_EXEC -c /etc/nrpe/nrpe.cfg -d
 
 PID=$(ps -ef | grep -v grep | grep  "${NRPE_EXEC}" | awk '{print $2}')
