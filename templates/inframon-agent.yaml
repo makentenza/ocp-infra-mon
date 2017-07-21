@@ -99,7 +99,7 @@ objects:
         - emptyDir: {}
           name: node-run
         - hostPath:
-            path: /inframon-agent
+            path: /var/inframon-agent
           name: nrpe-config
         - hostPath:
             path: /run/lvm
