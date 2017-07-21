@@ -16,11 +16,11 @@
   template:
     src: "{{ role_path }}/templates/host.j2"
     dest: /tmp/icingatmp/{{ ansible_hostname }}.conf
-  delegate_to: localhost
+  delegate_to: groups["masters"][0]
 
-- name: Copy Icinga Host config files fo first Master
-  synchronize:
-    src: /tmp/icingatmp
-    dest: /tmp/icingatmp
-  when: inventory_hostname == groups["masters"][0]
-  delegate_to: localhost
+#- name: Copy Icinga Host config files fo first Master
+#  synchronize:
+#    src: /tmp/icingatmp
+#    dest: /tmp/icingatmp
+#  when: inventory_hostname == groups["masters"][0]
+#  delegate_to: localhost
