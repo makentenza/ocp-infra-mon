@@ -26,3 +26,8 @@
   command: >
     /usr/local/bin/oc adm policy add-scc-to-user anyuid system:serviceaccount:infra-monitor:inframon
   when: inventory_hostname == groups["masters"][0]
+
+- name: Create configMap for Nodes to be monitor
+  command: >
+    /usr/local/bin/oc create configmap nrpe-hosts --from-file=/tmp/icingatmp/
+  when: inventory_hostname == groups["masters"][0]
