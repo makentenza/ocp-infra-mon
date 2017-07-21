@@ -16,7 +16,7 @@
   template:
     src: "{{ role_path }}/templates/host.j2"
     dest: /tmp/icingatmp/{{ ansible_hostname }}.conf
-  delegate_to: groups["masters"][0]
+  delegate_to: "{{ first_master }}"
 
 #- name: Copy Icinga Host config files fo first Master
 #  synchronize:
