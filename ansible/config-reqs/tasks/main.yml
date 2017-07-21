@@ -10,9 +10,9 @@
   notify:
     - restart iptables
 
-- name: Ensure /inframon-agent directoy exists
+- name: Ensure /var/inframon-agent directoy exists
   file:
-    path: /inframon-agent
+    path: /var/inframon-agent
     state: directory
     owner: root
     group: root
