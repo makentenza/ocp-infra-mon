@@ -1,4 +1,4 @@
 ---
 # vars file for config-master
-server_list: "{{ groups.["masters"] }}"
+server_list: "{{ groups.[masters] }}"
 first_master: "{{ server_list | first }}"
