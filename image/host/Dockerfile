@@ -48,6 +48,7 @@ RUN chmod +x /root/initicinga.sh && \
     cp /root/etcd/modmon/config.ini /etc/icingaweb2/modules/monitoring/config.ini && \
     cp /root/etcd/modmon/backends.ini /etc/icingaweb2/modules/monitoring/backends.ini && \
     cp /root/etcd/modmon/commandtransports.ini /etc/icingaweb2/modules/monitoring/commandtransports.ini && \
+    cp /root/my.cnf /etc/my.cnf && \
     ln -s /etc/icinga2/features-available/command.conf /etc/icinga2/features-enabled/command.conf && \
     find /etc/icingaweb2 -type f -name "*.ini" -exec chmod 660 {} \; && \
     find /etc/icingaweb2 -type d -exec chmod 2770 {} \;
