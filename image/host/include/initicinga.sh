@@ -42,6 +42,7 @@ if [ ! -f "${initfile}" ]; then
 	chown -R icinga:icingacmd /run/icinga2
   /usr/sbin/php-fpm &
   /usr/sbin/nginx
+	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
   touch ${initfile}
 else
 	mkdir -p /var/run/icinga2/cmd
