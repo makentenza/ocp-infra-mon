@@ -10,4 +10,5 @@
   template:
     src: "{{ role_path }}/templates/host.j2"
     dest: /tmp/icingatmp/{{ ansible_hostname }}.conf
-  delegate_to: "{{ first_master }}"
+  #delegate_to: "{{ first_master }}"
+  delegate_to: "{{ groups['masters'][0] }}"
