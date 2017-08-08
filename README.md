@@ -1,6 +1,11 @@
-# OCP Infrastructure Monitoring (In Progress)
+# OCP Infrastructure and Internals Monitoring (In Progress)
 
 The aim of this repository is to automate the deployment for a Infra and Internals Monitoring solution for OpenShift Container Platform. This solution is based in the OpenSource product [Icinga 2.](https://www.icinga.com/products/icinga-2/)
+
+The whole solution is deployed as containers in OCP. In order to remove the solution there are only 2 actions required:
+
+1. Delete the 'infra-monitor' namespace created by the automated deployment
+2. Optionally remove '/var/inframon-agent' directory and the iptables rule for port TCP/5666 from every Node 
 
 ## Pre-deployment requirements
 
