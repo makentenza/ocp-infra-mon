@@ -114,7 +114,7 @@ objects:
               port: 80
             timeoutSeconds: 3
           volumeMounts:
-          - mountPath: /var/lib.mysql
+          - mountPath: /var/lib/mysql
             name: mysql-data
           - mountPath: /etc/icinga2/conf.d
             name: icinga-config
