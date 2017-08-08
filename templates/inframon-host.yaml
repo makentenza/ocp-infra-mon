@@ -68,7 +68,7 @@ objects:
     name: ${MYSQL_PVC}
   spec:
     accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
     resources:
        requests:
          storage: 5Gi
@@ -78,10 +78,10 @@ objects:
     name: ${ICINCFG_PVC}
   spec:
     accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
     resources:
        requests:
-         storage: 1Gi  
+         storage: 1Gi
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
