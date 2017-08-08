@@ -1,17 +1,17 @@
 object Host "{{ ansible_fqdn }}" {
   address = "{{ ansible_fqdn }}"
   check_command = "hostalive"
-  {% if ansible_fqdn in groups['masters'] %}
+  {% if (ansible_fqdn in groups['masters']) or (ansible_hostname in groups['masters']) or (ansible_default_ipv4.address in groups['masters']) %}
   vars.master = "true"
   {% else %}
   vars.master = "false"
   {% endif %}
-  {% if ansible_fqdn in groups['nodes'] %}
+  {% if (ansible_fqdn in groups['nodes']) or (ansible_hostname in groups['nodes']) or (ansible_default_ipv4.address in groups['nodes']) %}
   vars.node = "true"
   {% else %}
   vars.node = "false"
   {% endif %}
-  {% if ansible_fqdn in groups['etcd'] %}
+  {% if (ansible_fqdn in groups['etcd']) or (ansible_hostname in groups['etcd']) or (ansible_default_ipv4.address in groups['etcd']) %}
   vars.etcd = "true"
   {% else %}
   vars.etcd = "false"
