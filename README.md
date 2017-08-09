@@ -1,11 +1,11 @@
 # OCP Infrastructure and Internals Monitoring (In Progress)
 
-The aim of this repository is to automate the deployment for a Infra and Internals Monitoring solution for OpenShift Container Platform. This solution is based in the OpenSource product [Icinga 2.](https://www.icinga.com/products/icinga-2/)
+The aim of this repository is to automate the deployment for an Infra and Internals Monitoring solution for OpenShift Container Platform. This solution is based in the OpenSource project [Icinga 2.](https://www.icinga.com/products/icinga-2/)
 
 The whole solution is deployed as containers in OCP. In order to remove the solution there are only 2 actions required:
 
 1. Delete the 'infra-monitor' namespace created by the automated deployment
-2. Optionally remove '/var/inframon-agent' directory and the iptables rule for port TCP/5666 from every Node 
+2. Optionally remove '/var/inframon-agent' directory and the iptables rule for port TCP/5666 from every Node
 
 ## Pre-deployment requirements
 
@@ -31,7 +31,7 @@ The Ansible playbook will prepare your environment and create different objects.
 Once the builds are completed, the Inframon Host will be automatically deployed and the associated service will be exposed. Use the following credentials to access to the Web Console:
 
     User: icingaadmin
-    Password: icingaadmin
+    Password: icinga
 
 The agents will be deployed as DaemonSets using the selector 'inframon-agent=true' to place the Pods on every Node. Label your Nodes properly so they could be placed:
 
