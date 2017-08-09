@@ -4,11 +4,7 @@ The aim of this repository is to automate the deployment for an Infra and Intern
 
 Once deployed, every OCP Cluster Node will be automatically added along its specific services depending on the group they belong to (Masters, Nodes, Etcd...).
 
-![Hostgrpups](media/monitor01.png "Automatically Created Hostgrpups")
-
 ![Hosts](media/monitor02.png "Automatically Created Hosts")
-
-![Services](media/monitor03.png "Automatically Created Services")
 
 ## Pre-deployment requirements
 
