@@ -7,15 +7,23 @@ function echo_log {
 	echo `$DATE`" $1"
 }
 
-if [ "$(ls -A /etc/nrpe.d | grep -v trashcan | grep -v scripts)" ]; then
-    echo_log "Not copying initial config files as /etc/nrpe.d is not Empty"
-else
-    echo_log "Copying initial config files as /etc/nrpe.d is Empty"
-		cp /root/nrpe_probes/* /etc/nrpe.d/
-		cp /root/nrpe_scripts/* /etc/nrpe.d/scripts/
-fi
+## As this is now a HostPath it should be deprecated
+#if [ "$(ls -A /etc/nrpe.d | grep -v trashcan | grep -v scripts)" ]; then
+#    echo_log "Not copying initial config files as /etc/nrpe.d is not Empty"
+#else
+#    echo_log "Copying initial config files as /etc/nrpe.d is Empty"
+#		cp /root/nrpe_probes/* /etc/nrpe.d/
+#		cp /root/nrpe_scripts/* /etc/nrpe.d/scripts/
+#fi
 
 chmod +x /etc/nrpe.d
+
+# Using SETUID with some scripts to avoid 'sudo' config in containers
+# Moving from shell scripts to binaries for security reasons
+
+cd /etc/nrpe.d/scripts/
+gcc check_lvm_wrapper.c -o check_lvm_wrapper
+chmod 4711 check_lvm_wrapper check_lvm.sh check_docker-linux
 
 if [ -f "/usr/sbin/nrpe" ]; then
   NRPE_EXEC="/usr/sbin/nrpe"
