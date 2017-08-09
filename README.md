@@ -1,11 +1,14 @@
 # OCP Infrastructure and Internals Monitoring (In Progress)
 
-The aim of this repository is to automate the deployment for an Infra and Internals Monitoring solution for OpenShift Container Platform. This solution is based in the OpenSource project [Icinga 2.](https://www.icinga.com/products/icinga-2/)
+The aim of this repository is to automate the deployment for an Infra and Internals Monitoring solution for OpenShift Container Platform. This solution is based in the OpenSource project [Icinga 2.](https://www.icinga.com/products/icinga-2/), deployed as containers in OCP.
 
-The whole solution is deployed as containers in OCP. In order to remove the solution there are only 2 actions required:
+Once deployed, every OCP Cluster Node will be automatically added along its specific services depending on the group they belong to (Masters, Nodes, Etcd...).
 
-1. Delete the 'infra-monitor' namespace created by the automated deployment
-2. Optionally remove '/var/inframon-agent' directory and the iptables rule for port TCP/5666 from every Node
+![Hostgrpups](media/monitor01.png "Automatically Created Hostgrpups")
+
+![Hosts](media/monitor02.png "Automatically Created Hosts")
+
+![Services](media/monitor03.png "Automatically Created Services")
 
 ## Pre-deployment requirements
 
@@ -36,3 +39,10 @@ Once the builds are completed, the Inframon Host will be automatically deployed 
 The agents will be deployed as DaemonSets using the selector 'inframon-agent=true' to place the Pods on every Node. Label your Nodes properly so they could be placed:
 
   ``` oc label node --all inframon-agent=true ```
+
+## Remove Instructions
+
+The whole solution is deployed as containers in OCP. In order to remove the solution there are only 2 actions required:
+
+1. Delete the 'infra-monitor' namespace created by the automated deployment
+2. Optionally remove '/var/inframon-agent' directory and the iptables rule for port TCP/5666 from every Node
