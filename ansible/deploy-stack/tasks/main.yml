@@ -2,7 +2,7 @@
 # tasks file for config-master
 - name: Create infra-monitor namespace
   command: >
-    /usr/local/bin/oc new-project infra-monitor --display-name="OCP Infra Monitoring" --description="OpenShift Infrastructure Monitor"
+    /usr/local/bin/oc new-project infra-monitor --display-name="OCP Infra and Internals Monitoring" --description="OpenShift Infrastructure and Internals Monitor"
   when: inventory_hostname == groups["masters"][0]
 
 - name: Copy templates to first masters
