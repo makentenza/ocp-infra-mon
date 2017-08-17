@@ -10,7 +10,7 @@ function echo_log {
 initfile=/var/lib/mysql/init.done
 
 # Create a fake socket for icinga IDO modules
-if [ ! -f "/var/lib/mysql/mysql.sock" ]; then
+if [ ! -f /var/lib/mysql/mysql.sock ]; then
 	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
 fi
 
