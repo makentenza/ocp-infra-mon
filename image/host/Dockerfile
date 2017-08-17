@@ -60,7 +60,7 @@ RUN chmod +x /root/initicinga.sh && \
     cp /root/nginx.conf /etc/nginx/nginx.conf && \
     cp /root/etcd/resources.ini /etc/icingaweb2/resources.ini && \
     cp /root/etcd/config.ini /etc/icingaweb2/config.ini && \
-    cp /root/etcd/authentication.ini etc/icingaweb2/authentication.ini && \
+    cp /root/etcd/authentication.ini /etc/icingaweb2/authentication.ini && \
     cp /root/etcd/roles.ini /etc/icingaweb2/roles.ini && \
     cp /root/php.ini /etc/php.ini && \
     mkdir /etc/icingaweb2/modules/monitoring && \
