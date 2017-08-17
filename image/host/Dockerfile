@@ -6,6 +6,12 @@ LABEL io.k8s.description="Icinga 2 All-in-one" \
       io.openshift.expose-services="80:tcp,5665:tcp" \
       io.openshift.tags="icinga2"
 
+ENV MODULE_VERSION 1.1.8
+ENV ICINGAWEB_MODULEPATH /usr/share/icingaweb2/modules
+ENV REPO_URL https://github.com/Mikesch-mp/icingaweb2-module-grafana
+ENV TARGET_DIR ${ICINGAWEB_MODULEPATH}/grafana
+ENV URL ${REPO_URL}/archive/v${MODULE_VERSION}.tar.gz
+
 ADD include /root/
 
 RUN chmod +x /root/initicinga.sh && \
@@ -13,7 +19,7 @@ RUN chmod +x /root/initicinga.sh && \
     yum update -y && \
     yum install epel-release -y && \
     yum install --setopt tsflags= nginx nagios-plugins-all nagios-plugins-nrpe mariadb-server mariadb icinga2 icinga2-doc icinga2-ido-mysql icingaweb2 icingacli php-fpm \
-    php-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql lvm2 -y && \
+    php-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql lvm2 wget unzip -y && \
     yum clean all && \
     #icinga2 feature enable command && \ ### Need to move this to CMD script, to start icinga, enable modules and then restart it
     #icinga2 feature enable api && \
@@ -33,9 +39,23 @@ RUN chmod +x /root/initicinga.sh && \
     usermod -a -G icingacmd nginx >> /dev/null && \
     chown root:icingaweb2 /etc/icingaweb2 && \
     chmod 2770 /etc/icingaweb2 && \
+    ### Grafana Module
+    install -d -m 0755 "${TARGET_DIR}" && \
+    wget -q -O - "$URL" | tar xfz - -C "${TARGET_DIR}" --strip-components 1 && \
+    ### Grafana Module
     mkdir -p /etc/icingaweb2/enabledModules && \
     ln -s /usr/share/icingaweb2/modules/monitoring /etc/icingaweb2/enabledModules/monitoring && \
-    #chown -R apache:icingaweb2 /etc/icingaweb2/* && \
+    ### Grafana Module
+    ln -s /usr/share/icingaweb2/modules/grafana /etc/icingaweb2/enabledModules/grafana && \
+    ### Grafana Module
+    ### PNP Module
+    cd /usr/share/icingaweb2/modules && \
+    wget https://github.com/Icinga/icingaweb2-module-pnp/archive/v1.1.0.zip && \
+    unzip v1.1.0.zip && \
+    mv icingaweb2-module-pnp-1.1.0 pnp && \
+    rm -rf v1.1.0.zip && \
+    ln -s /usr/share/icingaweb2/modules/pnp /etc/icingaweb2/enabledModules/pnp && \
+    ### PNP Module
     chown -R nginx:icingaweb2 /etc/icingaweb2/* && \
     cp /root/nginx.conf /etc/nginx/nginx.conf && \
     cp /root/etcd/resources.ini /etc/icingaweb2/resources.ini && \
