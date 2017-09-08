@@ -10,7 +10,10 @@ function echo_log {
 initfile=/var/lib/mysql/init.done
 
 # Create a fake socket for icinga IDO modules
-ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
+# Create a fake socket for icinga IDO modules
+if [ ! -h /var/lib/mysql/mysql.sock ]; then
+	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
+fi
 
 # update to latest snapshot packages
 #echo_log "Fetching latest icinga* snapshot packages.
