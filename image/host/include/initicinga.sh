@@ -50,6 +50,7 @@ if [ ! -f "${initfile}" ]; then
   /usr/sbin/nginx
   touch ${initfile}
 else
+	sed -i 's|listen = 127.0.0.1:9000|listen = /var/run/php5-fpm.sock|g' /etc/php-fpm.d/www.conf
 	mkdir -p /var/run/icinga2/cmd
 	mkdir -p /run/icinga2/cmd
 	mkdir -p /var/run/php-fpm
