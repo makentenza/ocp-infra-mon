@@ -103,6 +103,12 @@ fi
 #echo_log "Starting Supervisor. CTRL-C will stop the container."
 #/usr/bin/supervisord -c /etc/supervisord.conf >> /dev/null
 
+# Wait to MySQL to start
+while ! mysqladmin ping -hlocalhost --silent; do
+    sleep 1
+		echo "Waiting for MySQL to be ready"
+done
+
 
 
 icinga2 daemon
