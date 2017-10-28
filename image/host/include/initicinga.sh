@@ -30,7 +30,7 @@ fi
 
 if [ ! -f "${initfile}" ]; then
   /usr/libexec/mariadb-prepare-db-dir
-  /usr/libexec/mysqld --user=root --socket=/var/run/mariadb/mysql.sock &
+  /usr/libexec/mysqld --user=root &
   mysql_pid=$!
   /usr/libexec/mariadb-wait-ready $mysql_pid
   mysql < /root/db/icingadbs.sql
@@ -57,7 +57,7 @@ else
 	chmod 2750 /var/run/icinga2/cmd
 	chown -R icinga:icingacmd /var/run/icinga2
 	chown -R icinga:icingacmd /run/icinga2
-  /usr/libexec/mysqld --user=root --socket=/var/run/mariadb/mysql.sock &
+  /usr/libexec/mysqld --user=root &
   /usr/sbin/php-fpm &
   /usr/sbin/nginx
 fi
@@ -104,15 +104,9 @@ fi
 #/usr/bin/supervisord -c /etc/supervisord.conf >> /dev/null
 
 # Wait to MySQL to start
-while ! mysqladmin ping --socket=/var/run/mariadb/mysql.sock -hlocalhost --silent; do
+while ! mysqladmin ping -hlocalhost --silent; do
     sleep 1
 		echo "Waiting for MySQL to be ready"
 done
 
-# Create a fake socket for icinga IDO modules
-if [ ! -h /var/lib/mysql/mysql.sock ]; then
-	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
-fi
-
-sleep 100000000000000
-#icinga2 daemon
+icinga2 daemon

@@ -15,6 +15,7 @@ RUN chmod +x /root/initicinga.sh && \
     yum install --setopt tsflags= nginx nagios-plugins-all nagios-plugins-nrpe mariadb-server mariadb icinga2 icinga2-doc icinga2-ido-mysql icingaweb2 icingacli php-fpm \
     php-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql lvm2 -y && \
     yum clean all && \
+    rm -rf /var/cache/yum && \
     #icinga2 feature enable command && \ ### Need to move this to CMD script, to start icinga, enable modules and then restart it
     #icinga2 feature enable api && \
     #icinga2 feature enable ido-mysql && \
