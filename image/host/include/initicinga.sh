@@ -10,10 +10,9 @@ function echo_log {
 initfile=/var/lib/mysql/init.done
 
 # Create a fake socket for icinga IDO modules
-# Create a fake socket for icinga IDO modules
-if [ ! -h /var/lib/mysql/mysql.sock ]; then
-	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
-fi
+#if [ ! -h /var/lib/mysql/mysql.sock ]; then
+#	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
+#fi
 
 # update to latest snapshot packages
 #echo_log "Fetching latest icinga* snapshot packages.
@@ -31,7 +30,7 @@ fi
 
 if [ ! -f "${initfile}" ]; then
   /usr/libexec/mariadb-prepare-db-dir
-  /usr/libexec/mysqld --user=root &
+  /usr/libexec/mysqld --user=root --socket=/var/run/mariadb/mysql.sock &
   mysql_pid=$!
   /usr/libexec/mariadb-wait-ready $mysql_pid
   mysql < /root/db/icingadbs.sql
@@ -58,7 +57,7 @@ else
 	chmod 2750 /var/run/icinga2/cmd
 	chown -R icinga:icingacmd /var/run/icinga2
 	chown -R icinga:icingacmd /run/icinga2
-  /usr/libexec/mysqld --user=root &
+  /usr/libexec/mysqld --user=root --socket=/var/run/mariadb/mysql.sock &
   /usr/sbin/php-fpm &
   /usr/sbin/nginx
 fi
