@@ -62,7 +62,7 @@ else
   /usr/sbin/nginx
 fi
 
-if [ "$(ls -A /etc/icinga2/conf.d | grep -v trashcan | grep -v map)" ]; then
+if [ "$(ls -A /etc/icinga2/conf.d | grep -v trashcan | grep -v map | grep -v lost) " ]; then
     echo_log "Not copying initial config files as /etc/icinga2/conf.d is not Empty"
 else
     echo_log "Copying initial config files as /etc/icinga2/conf.d is Empty"
