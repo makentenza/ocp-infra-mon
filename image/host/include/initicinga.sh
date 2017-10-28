@@ -104,7 +104,7 @@ fi
 #/usr/bin/supervisord -c /etc/supervisord.conf >> /dev/null
 
 # Wait to MySQL to start
-while ! mysqladmin ping -hlocalhost --silent; do
+while ! mysqladmin ping --socket=/var/run/mariadb/mysql.sock -hlocalhost --silent; do
     sleep 1
 		echo "Waiting for MySQL to be ready"
 done
