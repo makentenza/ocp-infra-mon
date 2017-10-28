@@ -114,4 +114,5 @@ if [ ! -h /var/lib/mysql/mysql.sock ]; then
 	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
 fi
 
-icinga2 daemon
+sleep 100000000000000
+#icinga2 daemon
