@@ -9,10 +9,10 @@ function echo_log {
 
 initfile=/var/lib/mysql/init.done
 
-# Create a fake socket for icinga IDO modules
-#if [ ! -h /var/lib/mysql/mysql.sock ]; then
-#	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
-#fi
+# Delete the fake socket for icinga IDO modules
+if [ -h /var/lib/mysql/mysql.sock ]; then
+	rm -rf /var/lib/mysql/mysql.sock
+fi
 
 # update to latest snapshot packages
 #echo_log "Fetching latest icinga* snapshot packages.
@@ -108,5 +108,10 @@ while ! mysqladmin ping -hlocalhost --silent; do
     sleep 1
 		echo "Waiting for MySQL to be ready"
 done
+
+# Create a fake socket for icinga IDO modules
+if [ ! -h /var/lib/mysql/mysql.sock ]; then
+	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
+fi
 
 icinga2 daemon
