@@ -109,6 +109,9 @@ while ! mysqladmin ping -hlocalhost --silent; do
 		echo "Waiting for MySQL to be ready"
 done
 
-
+# Create a fake socket for icinga IDO modules
+if [ ! -h /var/lib/mysql/mysql.sock ]; then
+	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
+fi
 
 icinga2 daemon
