@@ -9,10 +9,9 @@ function echo_log {
 
 initfile=/var/lib/mysql/init.done
 
-# Create a fake socket for icinga IDO modules
-# Create a fake socket for icinga IDO modules
-if [ ! -h /var/lib/mysql/mysql.sock ]; then
-	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
+# Delete the fake socket for icinga IDO modules
+if [ -h /var/lib/mysql/mysql.sock ]; then
+	rm -rf /var/lib/mysql/mysql.sock
 fi
 
 # update to latest snapshot packages
@@ -63,7 +62,7 @@ else
   /usr/sbin/nginx
 fi
 
-if [ "$(ls -A /etc/icinga2/conf.d | grep -v trashcan | grep -v map)" ]; then
+if [ "$(ls -A /etc/icinga2/conf.d | grep -v trashcan | grep -v map | grep -v lost) " ]; then
     echo_log "Not copying initial config files as /etc/icinga2/conf.d is not Empty"
 else
     echo_log "Copying initial config files as /etc/icinga2/conf.d is Empty"
@@ -110,6 +109,9 @@ while ! mysqladmin ping -hlocalhost --silent; do
 		echo "Waiting for MySQL to be ready"
 done
 
-
+# Create a fake socket for icinga IDO modules
+if [ ! -h /var/lib/mysql/mysql.sock ]; then
+	ln -s /var/run/mariadb/mysql.sock /var/lib/mysql/mysql.sock
+fi
 
 icinga2 daemon

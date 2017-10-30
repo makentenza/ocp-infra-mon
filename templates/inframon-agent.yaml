@@ -52,7 +52,11 @@ objects:
         name: ${NAME}
       spec:
         containers:
+<<<<<<< HEAD
         - image: 172.30.194.54:5000/infra-monitor/inframon-agent:latest
+=======
+        - image: 172.30.161.168:5000/infra-monitor/inframon-agent:latest
+>>>>>>> 400fa67d84a6bb0522aa0adc25b0ce350ab9cce4
           livenessProbe:
             exec:
               command:
